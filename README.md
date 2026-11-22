@@ -1,20 +1,25 @@
 # Resume Pro
 
-Premium ATS Resume Builder.
+Premium ATS Resume Builder — Phases 0–3 complete.
 
-## Local setup
+## Quick Start
 
 ```bash
+git clone https://github.com/mahanth-77/resume-pro.git
+cd resume-pro
 npm install
 cp .env.example .env
-# Add your Supabase URL and anon key to .env
+# Edit .env with your keys (see below)
 npm run dev
 ```
 
-## Supabase setup (free tier)
+Open http://localhost:5173
 
-1. Create a project at supabase.com
-2. Run this SQL in the SQL Editor:
+## Required Free Services
+
+### 1. Supabase (Auth + Database)
+1. Create a free project at https://supabase.com
+2. Go to SQL Editor and run:
 
 ```sql
 create table resumes (
@@ -32,15 +37,29 @@ create policy "Users can manage their own resumes"
   using (auth.uid() = user_id);
 ```
 
-3. Copy Project URL and anon key into `.env`
+3. Copy Project URL and anon key into `.env`:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
 
-## Current features
-- Premium homepage
-- Multi-step builder with live preview
-- Deterministic ATS scoring
-- Fact-preserving improvement engine
-- PDF export (print)
-- File upload + PDF/DOCX parsing
-- Supabase auth + save/load scaffolding
+### 2. Groq (Free AI Improvement) — optional but recommended
+1. Create free account at https://console.groq.com
+2. Create an API key
+3. Add to `.env`:
+   - `VITE_GROQ_API_KEY`
 
-All free-tier ready.
+## Features by Phase
+
+- **Phase 1**: Landing, real Supabase auth, full multi-step builder (all sections), 3 templates, live preview, PDF download, dashboard with resume list
+- **Phase 2**: Upload PDF/DOCX, deterministic ATS scoring with category breakdowns and suggestions (`/upload`)
+- **Phase 3**: AI improvement (fact-preserving), original vs improved scores, job description matching (`/improve`)
+
+## Routes
+- `/` — Homepage
+- `/login` — Sign up / Sign in
+- `/dashboard` — Resume list (protected)
+- `/builder` — Full builder (protected)
+- `/upload` — ATS checker
+- `/improve` — AI improvement
+
+## Deploy
+Push to GitHub → import on Vercel (free). Add the same environment variables in Vercel project settings.
