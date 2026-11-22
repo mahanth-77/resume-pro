@@ -5,6 +5,7 @@ import Builder from './pages/Builder'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Upload from './pages/Upload'
+import Improve from './pages/Improve'
 import { supabase } from './lib/supabase'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/improve" element={<Improve />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/builder" element={<ProtectedRoute><Builder /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
