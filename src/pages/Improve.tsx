@@ -58,7 +58,7 @@ export default function Improve() {
 
       <div className="max-w-6xl mx-auto px-6 py-10">
         <h1 className="text-3xl font-serif font-semibold mb-2">Intelligent Improvement</h1>
-        <p className="text-stone mb-6">AI improves language and clarity while preserving every fact. Free Groq API key required.</p>
+        <p className="text-stone mb-6">AI improves language and clarity while preserving every fact. Sign in required. Groq key is kept server-side.</p>
 
         {error && <p className="text-warning mb-4 text-sm">{error}</p>}
 
