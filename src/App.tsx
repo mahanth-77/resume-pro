@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Builder from './pages/Builder'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import Upload from './pages/Upload'
 
 // Simple auth mock (replace with real Supabase later)
 const isAuthenticated = () => {
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/upload" element={<Upload />} />
         <Route
           path="/dashboard"
           element={
