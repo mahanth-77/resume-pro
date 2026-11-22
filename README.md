@@ -9,7 +9,7 @@ git clone https://github.com/mahanth-77/resume-pro.git
 cd resume-pro
 npm install
 cp .env.example .env
-# Edit .env with your keys (see below)
+# Edit .env with your Supabase keys (see below)
 npm run dev
 ```
 
@@ -41,17 +41,20 @@ create policy "Users can manage their own resumes"
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
 
-### 2. Groq (Free AI Improvement) — optional but recommended
-1. Create free account at https://console.groq.com
+### 2. Groq (AI Improvement) — server-side only
+1. Create a free account at https://console.groq.com
 2. Create an API key
-3. Add to `.env`:
-   - `VITE_GROQ_API_KEY`
+3. **Never** put the Groq key in frontend code or `VITE_` variables.
+4. For local API testing, set `GROQ_API_KEY` in your environment (or use Vercel CLI).
+5. On Vercel: Project Settings → Environment Variables → add `GROQ_API_KEY` (Production + Preview).
+
+The frontend calls `/api/ai-improve`. The serverless function reads `process.env.GROQ_API_KEY` and never exposes it.
 
 ## Features by Phase
 
-- **Phase 1**: Landing, real Supabase auth, full multi-step builder (all sections), 3 templates, live preview, PDF download, dashboard with resume list
-- **Phase 2**: Upload PDF/DOCX, deterministic ATS scoring with category breakdowns and suggestions (`/upload`)
-- **Phase 3**: AI improvement (fact-preserving), original vs improved scores, job description matching (`/improve`)
+- **Phase 1**: Landing, real Supabase auth, full multi-step builder, 3 templates, live preview, PDF download, dashboard
+- **Phase 2**: Upload PDF/DOCX, deterministic ATS scoring (`/upload`)
+- **Phase 3**: Secure AI improvement via server endpoint, original vs improved scores, job matching (`/improve`)
 
 ## Routes
 - `/` — Homepage
@@ -59,7 +62,18 @@ create policy "Users can manage their own resumes"
 - `/dashboard` — Resume list (protected)
 - `/builder` — Full builder (protected)
 - `/upload` — ATS checker
-- `/improve` — AI improvement
+- `/improve` — AI improvement (requires sign-in)
 
 ## Deploy
-Push to GitHub → import on Vercel (free). Add the same environment variables in Vercel project settings.
+1. Push to GitHub
+2. Import on Vercel
+3. Add environment variables in Vercel:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `GROQ_API_KEY` (server-only)
+4. Deploy
+
+## Security notes
+- Groq API key is never sent to the browser.
+- AI endpoints require a valid Supabase session.
+- Rate limiting and input length limits are enforced server-side.
